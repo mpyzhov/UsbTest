@@ -38,7 +38,6 @@ namespace UsbTest
             while (true)
             {
                 Console.WriteLine("Attempt = {0}", attempt++);
-
                 foreach (var device in devices)
                 {
                     try
@@ -49,7 +48,6 @@ namespace UsbTest
                     {
                         Console.WriteLine("EnsureOpened Error: " + ex.Message);
                     }
-
                     if (device.IsOpened())
                     {
                         Console.WriteLine(device.Pid + " is opened! " + device.DeviceHandle.DangerousGetHandle());

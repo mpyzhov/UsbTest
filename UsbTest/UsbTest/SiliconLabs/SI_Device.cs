@@ -83,7 +83,7 @@ namespace UsbTest
             }
             else
             {
-                throw new Exception(status.ToString());
+                Console.Write(status + " ");
             }
         }
 
