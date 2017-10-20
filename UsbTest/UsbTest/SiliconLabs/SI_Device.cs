@@ -91,14 +91,14 @@ namespace UsbTest
         {
         }
 
-        protected virtual bool Write(byte[] data)
+        public virtual bool Write(byte[] data)
         {
             if (data == null || data.Length == 0)
             {
                 return false;
             }
 
-            EnsureOpened();
+            //EnsureOpened();
 
             uint bytesWritten = 0;
             USBCommandHandler.SI_FlushBuffers(deviceHandle.DangerousGetHandle(), 1, 1);
@@ -106,15 +106,13 @@ namespace UsbTest
             return status == USBCommandHandler.SI_SUCCESS && bytesWritten == data.Length;
         }
 
-        protected virtual byte[] Read()
+        public virtual byte[] Read()
         {
-            EnsureOpened();
+            //EnsureOpened();
             byte[] buf = PrepareReadBuffer();
             uint bytesRead = 0;
             var status = USBCommandHandler.SI_Read(deviceHandle.DangerousGetHandle(), buf, (uint)buf.Length, ref bytesRead, IntPtr.Zero);
-            USBCommandHandler.SI_Close(deviceHandle.DangerousGetHandle());
-            Close();
-            deviceHandle = null;
+
             if (status == USBCommandHandler.SI_SUCCESS && bytesRead != 0)
             {
                 if (bytesRead != buf.Length)
@@ -146,7 +144,7 @@ namespace UsbTest
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Close device failed! " + ex.Message);
+                    throw ex;
                 }
             }
         }
